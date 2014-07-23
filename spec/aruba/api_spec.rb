@@ -98,7 +98,6 @@ describe Aruba::Api  do
 
       expect(file_name).to match /^prefix/
       expect(file_name).to match /suffix$/
-<<<<<<< HEAD
     end
   end
 
@@ -168,7 +167,6 @@ describe Aruba::Api  do
       end
     end
 
-<<<<<<< HEAD
     context '#remove_file' do
       before(:each) { File.open(@file_path, 'w') { |f| f << "" } }
 
@@ -302,7 +300,6 @@ describe Aruba::Api  do
           @aruba.check_file_content(file_path, "hello world", false)
         end
       end
-<<<<<<< HEAD
     end
 
     context "#with_file_content" do
