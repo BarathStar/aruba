@@ -13,3 +13,14 @@ Feature: Command environment variables
       """
       long_value
       """
+
+  Scenario: Append value to environment variable
+    Given I set the environment variables to:
+      | variable           | value      | action |
+      | LONG_LONG_VARIABLE | long_value |        |
+      | LONG_LONG_VARIABLE | long_value | +      |
+    When I run `/usr/bin/env`
+    Then the output should contain:
+      """
+      LONG_LONG_VARIABLE=long_valuelong_value
+      """
