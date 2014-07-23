@@ -482,10 +482,22 @@ module Aruba
       end
     end
 
-    def set_env(key, value)
+    def set_env(key, value, action = :set)
       announcer.env(key, value)
-      original_env[key] = ENV.delete(key)
-      ENV[key] = value
+
+      # store only the first value overwritten
+      original_env[key] = ENV.delete(key) unless original_env.key? key
+
+      if action == :set or action == :'='
+        ENV[key] = value
+      elsif action == :append or action == :+
+        ENV[key] = ENV[key].to_s + value
+      elsif action == :prepend or action == :'.'
+        ENV[key] = value + ENV[key].to_s
+      else
+        raise ArgumentError, "Invalid action \"#{action}\" given, allowed are \"set\" and \"append\"."
+      end
+
     end
 
     def restore_env
