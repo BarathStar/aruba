@@ -226,6 +226,14 @@ module Aruba
       end
     end
 
+    # Check if path is file and exist in filesystem
+    #
+    # @param [String, Array] paths
+    #   The paths which should be checked
+    def file_exist?(paths)
+      check_file_presence Array(paths), true
+    end
+
     # Check if paths are present
     #
     # @param [#each] paths
