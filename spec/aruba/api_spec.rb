@@ -82,6 +82,18 @@ describe Aruba::Api  do
   end
 
   describe 'files' do
+    context '#file_exist?' do
+      it 'succeeds if exists' do
+        File.open(@file_path, 'w') { |f| f << "" }
+
+        expect { @aruba.file_exist?(@file_name) }.not_to raise_error
+      end
+
+      it 'fails if file does not exist' do
+        expect { @aruba.file_exist?(@file_name) }.to raise_error RSpec::Expectations::ExpectationNotMetError
+      end
+    end
+
     context '#write_fixed_size_file' do
       it "should write a fixed sized file" do
         @aruba.write_fixed_size_file(@file_name, @file_size)
