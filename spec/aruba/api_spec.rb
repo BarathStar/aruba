@@ -474,10 +474,11 @@ describe Aruba::Api  do
     it "passes when the output doesn't match a regexp" do
       @aruba.assert_not_matching_output "bar", @aruba.all_output
     end
+
     it "fails when the output does match a regexp" do
       expect do
         @aruba.assert_not_matching_output "foo", @aruba.all_output
-      end . to raise_error RSpec::Expectations::ExpectationNotMetError
+      end.to raise_error RSpec::Expectations::ExpectationNotMetError
     end
   end
 

@@ -3,8 +3,9 @@ require 'rbconfig'
 require 'rspec/expectations'
 require 'aruba'
 require 'aruba/config'
+require 'aruba/utils'
 
-Dir.glob( File.join( File.expand_path( '../matchers' , __FILE__ )  , '*.rb' ) ).each { |rb| require rb }
+Aruba::Utils.require_files_matching_pattern File.join(File.expand_path( '../matchers' , __FILE__ )  , '*.rb' )
 
 module Aruba
   module Api
@@ -386,6 +387,37 @@ module Aruba
       end
     end
 
+    # Check the content of output
+    #
+    # It supports partial content as well. And it is up to you to decided if
+    # the content must be there or not.
+    #
+    # @param [String, Regexp] content
+    #   The content which must/must not be in the output. If content is
+    #   a String exact match is done, if content is a Regexp then all output
+    #   is matched using regular expression
+    #
+    # @param [true, false] expect_match
+    #   Must the content be in the file or not
+    def check_output(content, expect_match = true, output = all_output)
+      output  = output.force_encoding(content.encoding) if RUBY_VERSION >= '1.9'
+      output  = unescape(output)
+
+      content = unescape(content) unless Regexp === content
+
+      match_content = if Regexp === content
+                        match(content)
+                      else
+                        eq(content)
+                      end
+
+      if expect_match
+        expect(output).to match_content
+      else
+        expect(output).not_to match_content
+      end
+    end
+
     # @private
     # @deprecated
     def check_exact_file_content(file, exact_content, expect_match = true)
@@ -526,49 +558,60 @@ module Aruba
     #
     # @return [TrueClass, FalseClass]
     #   If arg1 is exactly the same as arg2 return true, otherwise false
-    def assert_exact_output(expected, actual)
-      actual.force_encoding(expected.encoding) if RUBY_VERSION >= "1.9"
-      expect(unescape(actual)).to eq unescape(expected)
+    # @private
+    # @deprecated
+    def assert_exact_output(expected, _actual)
+      warn('The use of "assert_exact_output" is deprecated. Use "#check_output".')
+
+      check_output(expected)
     end
 
     # Partial compare arg1 and arg2
     #
     # @return [TrueClass, FalseClass]
     #   If arg2 contains arg1 return true, otherwise false
+    # @private
+    # @deprecated
     def assert_partial_output(expected, actual)
-      actual.force_encoding(expected.encoding) if RUBY_VERSION >= "1.9"
-      expect(unescape(actual)).to include(unescape(expected))
+      warn('The use of "assert_partial_output" is deprecated. Use "#check_output".')
+
+      check_output(Utils.regexp(expected))
     end
 
     # Regex Compare arg1 and arg2
     #
     # @return [TrueClass, FalseClass]
     #   If arg2 matches arg1 return true, otherwise false
-    def assert_matching_output(expected, actual)
-      actual.force_encoding(expected.encoding) if RUBY_VERSION >= "1.9"
-      expect(unescape(actual)).to match /#{unescape(expected)}/m
+    # @private
+    # @deprecated
+    def assert_matching_output(expected, _actual)
+      warn('The use of "assert_matching_output" is deprecated. Use "#check_output".')
+
+      check_output(Utils.regexp(expected))
     end
 
     # Negative regex compare arg1 and arg2
     #
     # @return [TrueClass, FalseClass]
     #   If arg2 does not match arg1 return true, otherwise false
-    def assert_not_matching_output(expected, actual)
-      actual.force_encoding(expected.encoding) if RUBY_VERSION >= "1.9"
-      expect(unescape(actual)).not_to match(/#{unescape(expected)}/m)
+    # @private
+    # @deprecated
+    def assert_not_matching_output(expected, _actual)
+      warn('The use of "assert_not_matching_output" is deprecated. Use "#check_output".')
+
+      check_output(Utils.regexp(expected), false)
     end
 
     # Negative partial compare arg1 and arg2
     #
     # @return [TrueClass, FalseClass]
     #   If arg2 does not match/include arg1 return true, otherwise false
-    def assert_no_partial_output(unexpected, actual)
-      actual.force_encoding(unexpected.encoding) if RUBY_VERSION >= "1.9"
-      if Regexp === unexpected
-        expect(unescape(actual)).not_to match unexpected
-      else
-        expect(unescape(actual)).not_to include(unexpected)
-      end
+    # @private
+    # @deprecated
+    def assert_no_partial_output(unexpected, _actual)
+      warn('The use of "assert_no_partial_output" is deprecated. Use "#check_output".')
+
+      check_output(Utils.regexp(unexpected), false)
     end
 
     # Partial compare output of interactive command and arg1

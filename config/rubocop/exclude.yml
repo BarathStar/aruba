@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+
 # Cop supports --auto-correct.
 # Configuration parameters: SupportedStyles.
 Style/HashSyntax:

@@ -13,3 +13,5 @@ end
 #     gem g, :path => "../#{g}"
 #   end
 # end
+gem 'pry'
+gem 'pry-byebug'
