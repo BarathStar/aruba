@@ -2,11 +2,9 @@
 
 require 'simplecov'
 
-require 'pathname'
-
-root = Pathname(__FILE__).expand_path.parent.parent.parent
+root = File.expand_path('../../../', __FILE__)
 
 SimpleCov.command_name(ENV['SIMPLECOV_COMMAND_NAME'])
 SimpleCov.root(root)
-load root.join('.simplecov')
+load File.join(root, '.simplecov')
 
