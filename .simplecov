@@ -2,9 +2,7 @@
 # controlled by running with coverage, so don't explicitly start coverage (and
 # therefore generate a report) when in Rubymine.  This _will_ generate a report
 # whenever `rake spec` is run.
-unless ENV['RM_INFO']
-  SimpleCov.start
-end
+SimpleCov.start unless ENV['RM_INFO']
 
 SimpleCov.configure do
   # ignore this file
