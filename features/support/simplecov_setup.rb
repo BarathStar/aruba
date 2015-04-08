@@ -1,4 +1,4 @@
-# @note this file is loaded in env.rb to setup simplecov using RUBYOPTs for child processes
+# @note this file is loaded in env.rb to setup simplecov using RUBYOPTs for child processes and @in-process
 
 require 'simplecov'
 
