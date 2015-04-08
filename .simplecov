@@ -24,9 +24,9 @@ SimpleCov.configure do
   changed_filenames = all.split("\n")
 
   add_group 'Changed' do |source_file|
-    changed_filenames.detect { |changed_filename|
+    changed_filenames.select do |changed_filename|
       source_file.filename.end_with?(changed_filename)
-    }
+    end
   end
 
   add_group 'Libraries', 'lib'
