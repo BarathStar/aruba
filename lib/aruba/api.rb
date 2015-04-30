@@ -550,15 +550,15 @@ module Aruba
     # @param [true, false] expect_presence
     #   Should the directory be there or should the directory not be there
     def check_directory_presence(paths, expect_presence)
-      prep_for_fs_check do
-        paths.each do |path|
-          path = File.expand_path(path)
+      stop_processes!
 
-          if expect_presence
-            expect(File).to be_directory(path)
-          else
-            expect(File).not_to be_directory(path)
-          end
+      paths.each do |path|
+        path = expand_path(path)
+
+        if expect_presence
+          expect(File).to be_directory(path)
+        else
+          expect(File).not_to be_directory(path)
         end
       end
     end
