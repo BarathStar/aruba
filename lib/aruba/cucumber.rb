@@ -49,7 +49,7 @@ Given /^(?:an|the) empty file(?: named)? "([^"]*)" with mode "([^"]*)"$/ do |fil
 end
 
 Given /^a mocked home directory$/ do
-  set_env 'HOME', File.expand_path(current_dir)
+  set_env 'HOME', expand_path('.')
 end
 
 Given /^(?:a|the) directory(?: named)? "([^"]*)" does not exist$/ do |directory_name|
@@ -367,7 +367,7 @@ Then /^the mode of filesystem object "([^"]*)" should (not )?match "([^"]*)"$/ d
 end
 
 Before '@mocked_home_directory' do
-  set_env 'HOME', File.expand_path(current_dir)
+  set_env 'HOME', expand_path('.')
 end
 
 After do
