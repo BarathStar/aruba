@@ -412,6 +412,8 @@ module Aruba
     def check_file_presence(paths, expect_presence = true)
       warn('The use of "check_file_presence" is deprecated. Use "expect().to be_existing_file or expect(all_paths).to match_path_pattern() instead" ')
 
+      stop_processes!
+
       Array(paths).each do |path|
         if path.kind_of? Regexp
           if expect_presence
