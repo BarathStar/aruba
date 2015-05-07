@@ -98,7 +98,7 @@ module Aruba
     # @return [Array]
     #   List of files and directories
     def all_paths
-      Dir.glob(expand_path('**/*'))
+      read('.').map { |p| expand_path(p) }
     end
 
     # Return content of file or directory
