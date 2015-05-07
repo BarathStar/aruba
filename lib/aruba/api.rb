@@ -101,6 +101,19 @@ module Aruba
       Dir.glob(expand_path('**/*'))
     end
 
+    # Return content of file or directory
+    #
+    # @return [Array]
+    #   The content of file or directory
+    def read(name)
+      fail ArgumentError, %(Path "#{name}" does not exist.) unless exist? name
+      fail ArgumentError, %(Only files and directories are supported. Path "#{name}" is neither a directory nor a file.) unless file?(name) || directory?(name)
+
+      return Dir.glob(expand_path(File.join(name, '**', '*'))).map { |d| Pathname.new(d).relative_path_from(Pathname.new(expand_path('.'))).to_s } if directory? name
+
+      File.readlines(expand_path(name))
+    end
+
     # Create a file with given content
     #
     # The method does not check if file already exists. If the file name is a
