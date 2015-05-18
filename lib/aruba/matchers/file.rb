@@ -135,7 +135,7 @@ end
 #     end
 RSpec::Matchers.define :have_file_content do |expected|
   match do |actual|
-    next false unless file? actual
+    next false unless File.file? path
 
     values_match?(expected, File.read(expand_path(actual)).chomp)
   end
