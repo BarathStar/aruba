@@ -6,9 +6,11 @@
   <title><%= title %></title>
   <script src="<%= '../' * depth %>js/jquery-1.6.1.min.js" type="text/javascript"></script>
   <script src="<%= '../' * depth %>js/filesystem.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="<%= '../' * depth %>css/pygments-autumn.css" type="text/css" media="screen, projection" />
   <link rel="stylesheet" href="<%= '../' * depth %>css/console.css" type="text/css" media="screen, projection" />
   <link rel="stylesheet" href="<%= '../' * depth %>css/filesystem.css" type="text/css" media="screen, projection" />
+  <style>
+  <% Rouge::Themes::Base16.render(:scope => '.highlight') %>
+  </style>
 </head>
 <body>
 

@@ -302,8 +302,6 @@ expand_path('%/song.mp3')
 
 ## Reporting
 
-*Important* - you need [Pygments](http://pygments.org/) installed to use this feature.
-
 Aruba can generate a HTML page for each scenario that contains:
 
 * The title of the scenario

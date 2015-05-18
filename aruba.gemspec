@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'childprocess', '~> 0.5.6'
   s.add_runtime_dependency 'rspec-expectations', '~> 3.2.1'
   s.add_runtime_dependency 'kramdown', '~> 1.7.0'
+  s.add_runtime_dependency 'rouge', '~> 1.8.0'
 
   s.add_development_dependency 'bundler', '~> 1.9.6'
 
