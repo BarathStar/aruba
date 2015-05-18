@@ -11,6 +11,10 @@ require 'pathname'
 require 'aruba/cucumber'
 require 'rspec/expectations'
 
+# Pull in all of the gems including those in the `test` group
+require 'bundler'
+Bundler.require
+
 Before do |scenario|
   command_name = case scenario
                  when Cucumber::RunningTestCase::Scenario

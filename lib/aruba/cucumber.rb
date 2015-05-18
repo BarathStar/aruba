@@ -8,6 +8,11 @@ Given /the default aruba timeout is (\d+) seconds/ do |seconds|
   @aruba_timeout_seconds = seconds.to_i
 end
 
+Given /I use (?:a|the) fixture(?: named)? "([^"]*)"/ do |name|
+  FileUtils.cp_r expand_path(File.join('%', name)), expand_path(name)
+  cd name
+end
+
 Given /The default aruba timeout is (\d+) seconds/ do |seconds|
   warn(%{\e[35m    The  /^The default aruba timeout is (\d+) seconds/ step definition is deprecated. Please use the one with `the` and not `The` at the beginning.\e[0m})
   @aruba_timeout_seconds = seconds.to_i
