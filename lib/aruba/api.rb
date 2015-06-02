@@ -105,6 +105,7 @@ module Aruba
     # @return [Array]
     #   List of files and directories
     def all_paths
+<<<<<<< HEAD
       list('.').map { |p| expand_path(p) }
     end
 
