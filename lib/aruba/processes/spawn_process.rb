@@ -46,7 +46,7 @@ module Aruba
       # @yield [SpawnProcess]
       #   Run code for process which was started
       # rubocop:disable Metrics/MethodLength
-      def run!
+      def start
         @process   = ChildProcess.build(*Shellwords.split(@cmd))
         @out       = Tempfile.new("aruba-out")
         @err       = Tempfile.new("aruba-err")
@@ -70,24 +70,33 @@ module Aruba
 
         yield self if block_given?
       end
+      alias_method :run!, :start
       # rubocop:enable Metrics/MethodLength
 
       def stdin
         @process.io.stdin
       end
 
-      def stdout
-        wait_for_io do
+      def stdout(wait: true)
+        if wait
+          wait_for_io do
+            @process.io.stdout.flush
+            read(@out)
+          end
+        else
           @process.io.stdout.flush
-          read(@out)
         end || @output_cache
       end
 
-      def stderr
-        wait_for_io do
+      def stderr(wait: true)
+        if wait
+          wait_for_io do
+            @process.io.stderr.flush
+            read(@err)
+          end
+        else
           @process.io.stderr.flush
-          read(@err)
-        end || @error_cache
+        end || @output_cache
       end
 
       def read_stdout
