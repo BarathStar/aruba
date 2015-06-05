@@ -58,6 +58,7 @@ end
 
 After do
   restore_env
+  process_monitor.stop_processes!
   process_monitor.clear
 end
 

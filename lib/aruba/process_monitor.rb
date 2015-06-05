@@ -106,8 +106,11 @@ module Aruba
       all_stdout << all_stderr
     end
 
+    # Clear list of processes
     def clear
       processes.clear
+
+      self
     end
   end
 end

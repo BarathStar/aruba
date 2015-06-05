@@ -743,7 +743,7 @@ module Aruba
     # @return [TrueClass, FalseClass]
     #   If output of interactive command includes arg1 return true, otherwise false
     def assert_partial_output_interactive(expected)
-      unescape(last_command.stdout).include?(unescape(expected)) ? true : false
+      unescape(last_command.stdout(wait: false)).include?(unescape(expected)) ? true : false
     end
 
     # Check if command succeeded and if arg1 is included in output

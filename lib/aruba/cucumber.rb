@@ -155,6 +155,28 @@ When /^I pipe in (?:a|the) file(?: named)? "([^"]*)"$/ do |file|
   close_input
 end
 
+When /^I stop the command if (?:output|stdout) contains:$/ do |expected|
+  Timeout.timeout(exit_timeout) do
+    loop do
+      if assert_partial_output_interactive(expected)
+        last_command.terminate
+        break
+      end
+
+      sleep 0.1
+    end
+  end
+end
+
+When /^I wait for (?:output|stdout) to contain:$/ do |expected|
+  Timeout.timeout(exit_timeout) do
+    loop do
+      break if assert_partial_output_interactive(expected)
+      sleep 0.1
+    end
+  end
+end
+
 When /^I wait for (?:output|stdout) to contain "([^"]*)"$/ do |expected|
   Timeout.timeout(exit_timeout) do
     loop do

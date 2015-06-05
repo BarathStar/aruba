@@ -70,19 +70,35 @@ module Aruba
       end
 
       def stdin
+        return if @process.nil?
+
         @process.io.stdin
       end
 
-      def stdout
-        wait_for_io do
+      def stdout(wait: true)
+        return @output_cache if @process.nil?
+
+        if wait
+          wait_for_io do
+            @process.io.stdout.flush
+            read(@out)
+          end
+        else
           @process.io.stdout.flush
           read(@out)
         end || @output_cache
       end
 
-      def stderr
-        wait_for_io do
-          @process.io.stderr.flush
+      def stderr(wait: true)
+        return @error_cache if @process.nil?
+
+        if wait
+          wait_for_io do
+            @process.io.stderr.flush
+            read(@err)
+          end
+        else
+          @process.io.stdout.flush
           read(@err)
         end || @error_cache
       end
@@ -93,11 +109,15 @@ module Aruba
       end
 
       def write(input)
+        return if @process.nil?
+
         @process.io.stdin.write(input)
         @process.io.stdin.flush
       end
 
       def close_io(name)
+        return if @process.nil?
+
         @process.io.public_send(name.to_sym).close
       end
 
