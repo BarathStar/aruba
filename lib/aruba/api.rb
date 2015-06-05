@@ -40,9 +40,11 @@ module Aruba
     #   expand_path('%/file')
     #
     def expand_path(file_name, dir_string = nil)
-      message = "Filename cannot be nil or empty. Please use `expand_path('.')` if you want the current directory to be expanded."
+      file_name = file_name.to_s
+
+      message = "Filename cannot be empty. Please use `expand_path('.')` if you want the current directory to be expanded."
       # rubocop:disable Style/RaiseArgs
-      fail ArgumentError, message if file_name.nil? || file_name.empty?
+      fail ArgumentError, message if file_name.empty?
       # rubocop:enable Style/RaiseArgs
 
       if aruba.config.fixtures_path_prefix == file_name[0]
