@@ -186,6 +186,10 @@ When /^I wait for (?:output|stdout) to contain "([^"]*)"$/ do |expected|
   end
 end
 
+Then /^the output should be (\d+) bytes long$/ do |size|
+  expect(all_output).to have_size size.to_i
+end
+
 Then /^the output should contain "([^"]*)"$/ do |expected|
   assert_partial_output(expected, all_output)
 end
@@ -208,9 +212,6 @@ Then /^the output should( not)? contain:$/ do |fail, string|
   else
     expect(all_output).to include(string)
   end
-end
-
-Then /^the output should not contain:$/ do |unexpected|
 end
 
 ## the output should contain exactly "output"

@@ -246,6 +246,37 @@ module Aruba
     # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
 
+    # Check size of object
+    #
+    # @param [Object] obj
+    #   The objected to be checked
+    #
+    # @param [Numeric] size
+    #   The size the object should have
+    #
+    # @return [TrueClass, FalseClass]
+    #   The result of the check
+    def size?(obj, size)
+      object_size(obj) == size
+    end
+
+    # Size of object
+    #
+    # @param [Object] obj
+    #   The objected to be checked
+    #
+    # @return [Numeric]
+    #   The size of object
+    def object_size(obj)
+      if file?(obj)
+        File.size(expand_path(obj))
+      elsif obj.respond_to? :size
+        obj.size
+      else
+        -1
+      end
+    end
+
     # Create a file with the given size
     #
     # The method does not check if file already exists. If the file name is a

@@ -25,10 +25,6 @@ Then /^the following step should fail with Spec::Expectations::ExpectationNotMet
   expect{steps multiline_step.to_s}.to raise_error(RSpec::Expectations::ExpectationNotMetError)
 end
 
-Then /^the output should be (\d+) bytes long$/ do |length|
-  expect(all_output.length).to eq length.to_i
-end
-
 Then /^the feature(?:s)? should( not)?(?: all)? pass$/ do |negated|
   if negated
     step 'the output should contain " failed)"'
