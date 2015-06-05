@@ -36,6 +36,10 @@ Given /^(?:a|the) file(?: named)? "([^"]*)" with:$/ do |file_name, file_content|
   write_file(file_name, file_content)
 end
 
+Given /^(?:a|the) file(?: named)? "([^"]*)" with "([^"]*)"$/ do |file_name, file_content|
+  write_file(file_name, file_content)
+end
+
 Given /^(?:a|the) file(?: named)? "([^"]*)" with mode "([^"]*)" and with:$/ do |file_name, file_mode, file_content|
   write_file(file_name, file_content)
   filesystem_permissions(file_mode, file_name)
@@ -253,6 +257,10 @@ end
 
 Then /^the exit status should not be (\d+)$/ do |exit_status|
   assert_not_exit_status(exit_status.to_i)
+end
+
+Then /^it should (pass|fail) with "(.*?)"$/ do |pass_fail, partial_output|
+  self.__send__("assert_#{pass_fail}ing_with", partial_output)
 end
 
 Then /^it should (pass|fail) with:$/ do |pass_fail, partial_output|
