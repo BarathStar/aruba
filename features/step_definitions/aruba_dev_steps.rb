@@ -41,6 +41,7 @@ Then /^the feature(?:s)? should( not)?(?: all)? pass with:$/ do |negated, string
     step 'the exit status should be 1'
   else
     step 'the output should not contain " failed)"'
+    step 'the output should not contain " undefined)"'
     step 'the exit status should be 0'
   end
 
