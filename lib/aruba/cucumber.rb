@@ -180,12 +180,15 @@ Then /^the output should not contain "([^"]*)"$/ do |unexpected|
   assert_no_partial_output(unexpected, all_output)
 end
 
-Then /^the output should contain:$/ do |expected|
-  assert_partial_output(expected, all_output)
+Then /^the output should( not)? contain:$/ do |fail, string|
+  if fail
+    expect(all_output).not_to include(string)
+  else
+    expect(all_output).to include(string)
+  end
 end
 
 Then /^the output should not contain:$/ do |unexpected|
-  assert_no_partial_output(unexpected, all_output)
 end
 
 ## the output should contain exactly "output"
