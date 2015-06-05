@@ -905,7 +905,6 @@ module Aruba
 
       aruba.config.hooks.execute(:before_cmd, self, cmd)
 
-      announcer.announce(:directory, Dir.pwd)
       announcer.announce(:command, cmd)
 
       process = Aruba.process.new(cmd, timeout, io_wait, expand_path('.'))

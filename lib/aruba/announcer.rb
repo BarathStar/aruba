@@ -76,7 +76,9 @@ module Aruba
     def after_init
       format_string :directory, '$ cd %s'
       format_string :command, '$ %s'
-      format_string :environment, '$ export %s=%s"'
+      format_string :environment, '$ export %s="%s"'
+      format_string :stderr, "<<-STDERR\n%s\nSTDERR"
+      format_string :stdout, "<<-STDOUT\n%s\nSTDOUT"
 
       # rubocop:disable Metrics/LineLength
       if @options[:stdout]

@@ -56,6 +56,8 @@ module Aruba
       #   The directory
       def cd(dir)
         dirs << dir
+
+        announcer.announce(:directory, expand_path('.'))
         raise "#{current_directory} is not a directory." unless File.directory?(current_directory)
       end
 
