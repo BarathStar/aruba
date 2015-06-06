@@ -36,6 +36,10 @@ Given /^(?:a|the) file(?: named)? "([^"]*)" with:$/ do |file_name, file_content|
   write_file(file_name, file_content)
 end
 
+Given /^(?:an|the) executable(?: named)? "([^"]*)" with:$/ do |file_name, file_content|
+  step %(a file named "#{file_name}" with mode "0755" and with:), file_content
+end
+
 Given /^(?:a|the) file(?: named)? "([^"]*)" with "([^"]*)"$/ do |file_name, file_content|
   write_file(file_name, file_content)
 end
